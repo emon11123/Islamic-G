@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a5e63 0%, #0d8b8f 100%);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 50px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+        
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #0d8b8f;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border-radius: 50px;
+        }
+        
+        .content-section {
+            display: none;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            color: #0d8b8f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d8b8f;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        /* প্রশ্ন বিভাগ স্টাইল */
+        .question-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .option {
+            padding: 12px;
+            background-color: #e9f5f5;
+            border: 2px solid #0d8b8f;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option:hover {
+            background-color: #0d8b8f;
+            color: white;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .score-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f5f5;
+            border-radius: 10px;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0d8b8f;
+        }
+        
+        /* নামাজের সময় স্টাইল */
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .prayer-time {
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .prayer-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .prayer-hour {
+            font-size: 1.5rem;
+        }
+        
+        /* ইসলামিক ক্যালেন্ডার স্টাইল */
+        .islamic-date {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .hijri-date {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .gregorian-date {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* কুরআন বিভাগ স্টাইল */
+        .quran-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .quran-card {
+            background-color: #e9f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .quran-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quran-card i {
+            font-size: 2.5rem;
+            color: #0d8b8f;
+            margin-bottom: 15px;
+        }
+        
+        .quran-card h3 {
+            color: #084c4f;
+            margin-bottom: 10px;
+        }
+        
+        /* ব্যালেন্স ও উত্তোলন স্টাইল */
+        .balance-container {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .withdraw-btn {
+            background-color: white;
+            color: #0d8b8f;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .withdraw-btn:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .withdraw-note {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* নামাজের নিয়ম স্টাইল */
+        .prayer-rules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .prayer-rule {
+            background-color: #e9f5f5;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .prayer-rule h3 {
+            color: #084c4f;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d8b8f;
+        }
+        
+        .prayer-rule ol {
+            margin-left: 20px;
+        }
+        
+        .prayer-rule li {
+            margin-bottom: 10px;
+        }
+        
+        /* লগইন ফর্ম স্টাইল */
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+        
+        .login-title {
+            text-align: center;
+            color: #0d8b8f;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #084c4f;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #0d8b8f;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #084c4f;
+        }
+        
+        .register-link a {
+            color: #0d8b8f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        /* রমজান ক্যালেন্ডার স্টাইল */
+        .ramadan-calendar {
+            overflow-x: auto;
+        }
+        
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #0d8b8f;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .calendar-table th {
+            background-color: #0d8b8f;
+            color: white;
+        }
+        
+        .calendar-table tr:nth-child(even) {
+            background-color: #e9f5f5;
+        }
+        
+        .calendar-table tr:hover {
+            background-color: #d1eaea;
+        }
+        
+        /* ফুটার স্টাইল */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        /* রেস্পন্সিভ ডিজাইন */
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .calendar-table {
+                font-size: 0.8rem;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #0d8b8f 0%, #084c4f 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #084c4f;
+            font-weight: bold;
+        }
+        
+        .next-question-info {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9f5f5;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-page" class="login-container">
+        <h2 class="login-title">Islamic Guide</h2>
+        <div class="form-group">
+            <label for="username">ব্যবহারকারীর নাম</label>
+            <input type="text" id="username" placeholder="আপনার ব্যবহারকারীর নাম লিখুন">
+        </div>
+        <div class="form-group">
+            <label for="password">পাসওয়ার্ড</label>
+            <input type="password" id="password" placeholder="আপনার পাসওয়ার্ড লিখুন">
+        </div>
+        <button class="login-btn" id="login-btn">লগইন করুন</button>
+        <div class="register-link">
+            <p>নতুন অ্যাকাউন্ট তৈরি করতে <a href="#" id="register-link">এখানে ক্লিক করুন</a></p>
+        </div>
+        <div id="login-error" class="error-message hidden"></div>
+    </div>
+
+    <div id="app-container" class="container hidden">
+        <header>
+            <h1>Islamic Guide</h1>
+            <p>ইসলামিক জ্ঞান অর্জন করুন এবং পুরস্কার পান</p>
+        </header>
+        
+        <div class="nav">
+            <div class="nav-item active" data-target="questions">প্রশ্নোত্তর</div>
+            <div class="nav-item" data-target="prayer-times">নামাজের সময়</div>
+            <div class="nav-item" data-target="islamic-calendar">ইসলামিক ক্যালেন্ডার</div>
+            <div class="nav-item" data-target="ramadan-calendar">রমজান ক্যালেন্ডার</div>
+            <div class="nav-item" data-target="quran">কুরআন</div>
+            <div class="nav-item" data-target="balance">ব্যালেন্স</div>
+            <div class="nav-item" data-target="prayer-rules">নামাজের নিয়ম</div>
+            <div class="nav-item" id="logout-btn">লগআউট</div>
+        </div>
+        
+        <!-- প্রশ্নোত্তর বিভাগ -->
+        <div id="questions" class="content-section active">
+            <h2 class="section-title">ইসলামিক প্রশ্নোত্তর</h2>
+            
+            <div class="question-container">
+                <div class="question" id="current-question">রাসূল (সা.) এর মিরাজের ঘটনাটি কোন সালে ঘটে?</div>
+                
+                <div class="options">
+                    <div class="option" data-value="0">নবুয়তের ৫ম বছর</div>
+                    <div class="option" data-value="1">নবুয়তের ১০ম বছর</div>
+                    <div class="option" data-value="2">নবুয়তের ১২তম বছর</div>
+                    <div class="option" data-value="3">নবুয়তের ১৫তম বছর</div>
+                </div>
+                
+                <button class="submit-btn" id="submit-answer">উত্তর জমা দিন</button>
+                <div class="timer" id="question-timer">পরবর্তী প্রশ্ন: <span id="timer-count">05:00</span></div>
+            </div>
+            
+            <div class="score-container">
+                <p>আপনার অর্জিত স্কোর:</p>
+                <div class="score">৳ <span id="user-score">0.00</span></div>
+                <p class="withdraw-note">ভুল উত্তরের জন্য কোন পুরস্কার দেওয়া হবে না</p>
+            </div>
+            
+            <div class="next-question-info" id="next-question-info">
+                পরবর্তী প্রশ্নের জন্য ৫ মিনিট অপেক্ষা করুন। একই প্রশ্ন বারবার করলে টাকা দেওয়া হবে না।
+            </div>
+        </div>
+        
+        <!-- নামাজের সময় বিভাগ -->
+        <div id="prayer-times" class="content-section">
+            <h2 class="section-title">নামাজের সময়সূচী</h2>
+            
+            <div class="prayer-times">
+                <div class="prayer-time">
+                    <div class="prayer-name">ফজর</div>
+                    <div class="prayer-hour" id="fajr-time">৪:৪৫ AM</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">জোহর</div>
+                    <div class="prayer-hour" id="dhuhr-time">১২:১৫ PM</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">আসর</div>
+                    <div class="prayer-hour" id="asr-time">৪:৩০ PM</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">মাগরিব</div>
+                    <div class="prayer-hour" id="maghrib-time">৬:২০ PM</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">ইশা</div>
+                    <div class="prayer-hour" id="isha-time">৭:৪৫ PM</div>
+                </div>
+            </div>
+            
+            <div class="islamic-date">
+                <div class="hijri-date" id="hijri-date">২৫ জিলক্বদ, ১৪৪৫ হিজরি</div>
+                <div class="gregorian-date" id="gregorian-date">শনিবার, ১৫ জুন, ২০২৪</div>
+            </div>
+        </div>
+        
+        <!-- ইসলামিক ক্যালেন্ডার বিভাগ -->
+        <div id="islamic-calendar" class="content-section">
+            <h2 class="section-title">ইসলামিক ক্যালেন্ডার</h2>
+            
+            <div class="islamic-date">
+                <div class="hijri-date" id="hijri-date-full">২৫ জিলক্বদ, ১৪৪৫ হিজরি</div>
+                <div class="gregorian-date" id="gregorian-date-full">শনিবার, ১৫ জুন, ২০২৪</div>
+            </div>
+            
+            <div class="prayer-times">
+                <div class="prayer-time">
+                    <div class="prayer-name">রমজান শুরু</div>
+                    <div class="prayer-hour">১৮ ফেব্রুয়ারি, ২০২৬</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">ঈদুল ফিতর</div>
+                    <div class="prayer-hour">২০ মার্চ, ২০২৬</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">হজ্জ</div>
+                    <div class="prayer-hour">× ×, ২০২৬</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">ঈদুল আদহা</div>
+                    <div class="prayer-hour">২৭ মে, ২০২৬</div>
+                </div>
+                <div class="prayer-time">
+                    <div class="prayer-name">ইসলামিক নববর্ষ</div>
+                    <div class="prayer-hour">১৬ জুন, ২০২৪</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- রমজান ক্যালেন্ডার বিভাগ -->
+        <div id="ramadan-calendar" class="content-section">
+            <h2 class="section-title">২০২৬ সালের রমজান ক্যালেন্ডার</h2>
+            
+            <div class="ramadan-calendar">
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>দিন</th>
+                            <th>সেহরীর শেষ সময়</th>
+                            <th>ইফতারের সময়</th>
+                            <th>রোজার দিন</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>১৮ ফেব্রুয়ারি</td>
+                            <td>বুধবার</td>
+                            <td>৫:১৫ AM</td>
+                            <td>৬:০৫ PM</td>
+                            <td>১</td>
+                        </tr>
+                        <tr>
+                            <td>১৯ ফেব্রুয়ারি</td>
+                            <td>বৃহস্পতিবার</td>
+                            <td>৫:১৪ AM</td>
+                            <td>۶:০৫ PM</td>
+                            <td>২</td>
+                        </tr>
+                        <tr>
+                            <td>২০ ফেব্রুয়ারি</td>
+                            <td>শুক্রবার</td>
+                            <td>৫:১৩ AM</td>
+                            <td>৬:০৬ PM</td>
+                            <td>৩</td>
+                        </tr>
+                        <tr>
+                            <td>২১ ফেব্রুয়ারি</td>
+                            <td>শনিবার</td>
+                            <td>৫:১২ AM</td>
+                            <td>৬:০৬ PM</td>
+                            <td>৪</td>
+                        </tr>
+                        <tr>
+                            <td>২২ ফেব্রুয়ারি</td>
+                            <td>রবিবার</td>
+                            <td>৫:১১ AM</td>
+                            <td>৬:০৭ PM</td>
+                            <td>৫</td>
+                        </tr>
+                        <tr>
+                            <td>২৩ ফেব্রুয়ারি</td>
+                            <td>সোমবার</td>
+                            <td>৫:১০ AM</td>
+                            <td>৬:০৭ PM</td>
+                            <td>৬</td>
+                        </tr>
+                        <tr>
+                            <td>২৪ ফেব্রুয়ারি</td>
+                            <td>মঙ্গলবার</td>
+                            <td>৫:০৯ AM</td>
+                            <td>৬:০৮ PM</td>
+                            <td>৭</td>
+                        </tr>
+                        <tr>
+                            <td>২৫ ফেব্রুয়ারি</td>
+                            <td>বুধবার</td>
+                            <td>৫:০৮ AM</td>
+                            <td>৬:০৮ PM</td>
+                            <td>৮</td>
+                        </tr>
+                        <tr>
+                            <td>২৬ ফেব্রুয়ারি</td>
+                            <td>বৃহস্পতিবার</td>
+                            <td>৫:০৭ AM</td>
+                            <td>৬:০৯ PM</td>
+                            <td>৯</td>
+                        </tr>
+                        <tr>
+                            <td>২৭ ফেব্রুয়ারি</td>
+                            <td>শুক্রবার</td>
+                            <td>৫:০৬ AM</td>
+                            <td>৬:০৯ PM</td>
+                            <td>১০</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- কুরআন বিভাগ -->
+        <div id="quran" class="content-section">
+            <h2 class="section-title">পবিত্র কুরআন</h2>
+            
+            <div class="quran-container">
+                <div class="quran-card">
+                    <i class="fas fa-book-quran"></i>
+                    <h3>কুরআন তেলাওয়াত</h3>
+                    <p>শুনুন এবং পড়ুন পবিত্র কুরআনের আয়াতসমূহ</p>
+                </div>
+                
+                <div class="quran-card">
+                    <i class="fas fa-translate"></i>
+                    <h3>কুরআনের অনুবাদ</h3>
+                    <p>বাংলা অনুবাদ সহ কুরআন পড়ুন</p>
+                </div>
+                
+                <div class="quran-card">
+                    <i class="fas fa-microphone"></i>
+                    <h3>কুরআন তাফসীর</h3>
+                    <p>বিখ্যাত আলেমদের তাফসীর শুনুন</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ব্যালেন্স বিভাগ -->
+        <div id="balance" class="content-section">
+            <h2 class="section-title">আপনার ব্যালেন্স</h2>
+            
+            <div class="balance-container">
+                <p>আপনার মোট অর্জিত অর্থ</p>
+                <div class="balance-amount">৳ <span id="balance-amount">0.00</span></div>
+                <button class="withdraw-btn" id="withdraw-btn">উত্তোলন করুন</button>
+                <p class="withdraw-note">উত্তোলন করার পর ২৪ ঘন্টার মধ্যে ব্যালেন্স হালনাগাদ হবে</p>
+            </div>
+            
+            <div class="score-container">
+                <h3>উত্তোলন নিয়মাবলী</h3>
+                <p>ভুল উত্তরের জন্য কোন পুরস্কার দেওয়া হবে না</p>
+                <p>উত্তোলন করার পর ২৪ ঘন্টার মধ্যে ব্যালেন্স হালনাগাদ হবে</p>
+                <p>প্রতিদিন সর্বোচ্চ ১০টি প্রশ্নের উত্তর দেওয়া যাবে</p>
+                <p>ন্যূনতম ৳৫০০ উত্তোলন করা যাবে</p>
+            </div>
+        </div>
+        
+        <!-- নামাজের নিয়ম বিভাগ -->
+        <div id="prayer-rules" class="content-section">
+            <h2 class="section-title">নামাজের নিয়ম</h2>
+            
+            <div class="prayer-rules">
+                <div class="prayer-rule">
+                    <h3>ফজরের নামাজ</h3>
+                    <ol>
+                        <li>ওযু করা</li>
+                        <li>কিবলা মুখী হয়ে দাঁড়ানো</li>
+                        <li>২ রাকাত সুন্নত পড়া</li>
+                        <li>২ রাকাত ফরজ পড়া</li>
+                    </ol>
+                </div>
+                
+                <div class="prayer-rule">
+                    <h3>জোহরের নামাজ</h3>
+                    <ol>
+                        <li>ওযু করা</li>
+                        <li>কিবলা মুখী হয়ে দাঁড়ানো</li>
+                        <li>৪ রাকাত সুন্নত পড়া</li>
+                        <li>৪ রাকাত ফরজ পড়া</li>
+                        <li>২ রাকাত সুন্নত পড়া</li>
+                    </ol>
+                </div>
+                
+                <div class="prayer-rule">
+                    <h3>আসরের নামাজ</h3>
+                    <ol>
+                        <li>ওযু করা</li>
+                        <li>কিবলা মুখী হয়ে দাঁড়ানো</li>
+                        <li>৪ রাকাত সুন্নত পড়া</li>
+                        <li>৪ রাকাত ফরজ পড়া</li>
+                    </ol>
+                </div>
+                
+                <div class="prayer-rule">
+                    <h3>মাগরিবের নামাজ</h3>
+                    <ol>
+                        <li>ওযু করা</li>
+                        <li>কিবলা মুখী হয়ে দাঁড়ানো</li>
+                        <li>৩ রাকাত ফরজ পড়া</li>
+                        <li>২ রাকাত সুন্নত পড়া</li>
+                    </ol>
+                </div>
+                
+                <div class="prayer-rule">
+                    <h3>ইশার নামাজ</h3>
+                    <ol>
+                        <li>ওযু করা</li>
+                        <li>কিবলা মুখী হয়ে দাঁড়ানো</li>
+                        <li>৪ রাকাত সুন্নত পড়া</li>
+                        <li>৪ রাকাত ফরজ পড়া</li>
+                        <li>২ রাকাত সুন্নত পড়া</li>
+                        <li>৩ রাকাত বিতর পড়া</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <button class="download-btn" id="download-btn">অ্যাপ্লিকেশন ডাউনলোড করুন</button>
+        
+        <footer>
+            <p>© ২০২৪ ইসলামিক কম্প্যানিয়ন - সকল права সংরক্ষিত</p>
+        </footer>
+    </div>
+
+    <script>
+        // প্রশ্ন ডাটাবেস - 50+ প্রশ্ন
+        const questions = [
+            {
+                question: "রাসূল (সা.) এর মিরাজের ঘটনাটি কোন সালে ঘটে?",
+                options: ["নবুয়তের ৫ম বছর", "নবুয়তের ১০ম বছর", "নবুয়তের ১২তম বছর", "নবুয়তের ১৫তম বছর"],
+                correctAnswer: 1
+            },
+            {
+                question: "ইসলামের কোন স্তম্ভটি সর্বপ্রথম ফরজ হয়?",
+                options: ["নামায", "রোযা", "যাকাত", "শাহাদাহ"],
+                correctAnswer: 3
+            },
+            {
+                question: "রাসূল (সা.) এর প্রথম ওহী কোন স্থানে নাযিল হয়?",
+                options: ["মসজিদে নববীতে", "হেরা গুহায়", "আরাফার মাঠে", "জান্নাতুল বাকীতে"],
+                correctAnswer: 1
+            },
+            {
+                question: "কুরআন মাজীদে কয়টি সূরা আছে?",
+                options: ["১০০", "১১০", "১১৪", "১২০"],
+                correctAnswer: 2
+            },
+            {
+                question: "ইসলামের ইতিহাসে প্রথম নির্মিত মসজিদ是哪一座?",
+                options: ["মসজিদে নববী", "মসজিদে আকসা", "মসজিদে কুবা", "মসজিদে হারাম"],
+                correctAnswer: 2
+            },
+            {
+                question: "কাবা শরীফ কোথায় অবস্থিত?",
+                options: ["মদিনা", "জেদ্দা", "মক্কা", "রিয়াদ"],
+                correctAnswer: 2
+            },
+            {
+                question: "ইসলামে হজ্জ ফরজ হয় কোন সালে?",
+                options: ["৬ হিজরি", "৮ হিজরি", "৯ হিজরি", "১০ হিজরি"],
+                correctAnswer: 2
+            },
+            {
+                question: "রমজান মাসে কয় রাকাত তারাবিহ নামাজ পড়া হয়?",
+                options: ["৮ রাকাত", "১৭ রাকাত", "২০ রাকাত", "৩৬ রাকাত"],
+                correctAnswer: 2
+            },
+            {
+                question: "কুরআন মাজীদের কোন সূরাটি প্রথম নাযিল হয়?",
+                options: ["সূরা ফাতিহা", "সূরা ইখলাস", "সূরা আলাক", "সূরা ইয়াসিন"],
+                correctAnswer: 2
+            },
+            {
+                question: "রাসূল (সা.) এর পিতার নাম কি?",
+                options: ["আবদুল্লাহ", "আবু তালিব", "আবদুল মুত্তালিব", "হামজা"],
+                correctAnswer: 0
+            },
+            // আরও 40+ প্রশ্ন এখানে যোগ করুন...
+            {
+                question: "ইসলামের পঞ্চস্তম্ভ কী কী?",
+                options: ["নামাজ, রোজা, হজ্জ, যাকাত, শাহাদাহ", "নামাজ, রোজা, হজ্জ, যাকাত, জিহাদ", "নামাজ, রোজা, হজ্জ, যাকাত, দাওয়াত", "নামাজ, রোজা, হজ্জ, যাকাত, এতিম পালন"],
+                correctAnswer: 0
+            }
+        ];
+
+        // নেভিগেশন সিস্টেম
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if(this.id === 'logout-btn') {
+                    localStorage.removeItem('currentUser');
+                    window.location.reload();
+                    return;
+                }
+                
+                // সক্রিয় নেভিগেশন আইটেম আপডেট করুন
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // সক্রিয় কন্টেন্ট বিভাগ আপডেট করুন
+                const target = this.getAttribute('data-target');
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        let currentQuestionIndex = 0;
+        let userScore = 0;
+        let userBalance = 0;
+        let selectedOption = null;
+        let answeredQuestions = [];
+        let questionTimer = null;
+        let timeLeft = 300; // 5 minutes in seconds
+
+        // DOM এলিমেন্ট
+        const questionElement = document.getElementById('current-question');
+        const optionsElements = document.querySelectorAll('.option');
+        const scoreElement = document.getElementById('user-score');
+        const balanceElement = document.getElementById('balance-amount');
+        const submitButton = document.getElementById('submit-answer');
+        const withdrawButton = document.getElementById('withdraw-btn');
+        const downloadButton = document.getElementById('download-btn');
+        const timerElement = document.getElementById('timer-count');
+        const nextQuestionInfo = document.getElementById('next-question-info');
+
+        // বর্তমান প্রশ্ন লোড করুন
+        function loadQuestion() {
+            // টাইমার রিসেট করুন
+            clearInterval(questionTimer);
+            timeLeft = 300;
+            updateTimerDisplay();
+            
+            // টাইমার শুরু করুন
+            questionTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(questionTimer);
+                    enableQuestion();
+                }
+            }, 1000);
+            
+            // এমন প্রশ্ন খুঁজুন যা এখনো উত্তর দেওয়া হয়নি
+            let availableQuestions = questions.filter((q, index) => !answeredQuestions.includes(index));
+            
+            if (availableQuestions.length === 0) {
+                // সব প্রশ্ন উত্তর হয়ে গেলে, রিসেট করুন কিন্তু স্কোর রাখুন
+                answeredQuestions = [];
+                availableQuestions = questions;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+            currentQuestionIndex = questions.indexOf(availableQuestions[randomIndex]);
+            
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            
+            optionsElements.forEach((option, index) => {
+                option.textContent = currentQuestion.options[index];
+                option.style.display = 'block';
+            });
+            
+            submitButton.style.display = 'block';
+            selectedOption = null;
+            optionsElements.forEach(option => {
+                option.style.backgroundColor = '#e9f5f5';
+                option.style.color = '#333';
+            });
+            
+            // প্রশ্ন নিষ্ক্রিয় করুন
+            disableQuestion();
+        }
+
+        // প্রশ্ন নিষ্ক্রিয় করুন
+        function disableQuestion() {
+            optionsElements.forEach(option => {
+                option.style.pointerEvents = 'none';
+                option.style.opacity = '0.6';
+            });
+            submitButton.disabled = true;
+            submitButton.style.opacity = '0.6';
+            nextQuestionInfo.style.display = 'block';
+        }
+
+        // প্রশ্ন সক্রিয় করুন
+        function enableQuestion() {
+            optionsElements.forEach(option => {
+                option.style.pointerEvents = 'auto';
+                option.style.opacity = '1';
+            });
+            submitButton.disabled = false;
+            submitButton.style.opacity = '1';
+            nextQuestionInfo.style.display = 'none';
+        }
+
+        // টাইমার ডিসপ্লে আপডেট করুন
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // বিকল্প নির্বাচন
+        optionsElements.forEach(option => {
+            option.addEventListener('click', function() {
+                if (submitButton.disabled) return;
+                
+                optionsElements.forEach(opt => {
+                    opt.style.backgroundColor = '#e9f5f5';
+                    opt.style.color = '#333';
+                });
+                
+                this.style.backgroundColor = '#0d8b8f';
+                this.style.color = 'white';
+                
+                selectedOption = parseInt(this.getAttribute('data-value'));
+            });
+        });
+        
+        // উত্তর জমা দিন
+        submitButton.addEventListener('click', function() {
+            if (selectedOption === null) {
+                alert('দয়া করে একটি উত্তর নির্বাচন করুন');
+                return;
+            }
+            
+            const currentQuestion = questions[currentQuestionIndex];
+            
+            if (selectedOption === currentQuestion.correctAnswer) {
+                userScore += 0.5;
+                userBalance += 0.5;
+                scoreElement.textContent = userScore.toFixed(2);
+                balanceElement.textContent = userBalance.toFixed(2);
+                alert('সঠিক উত্তর! আপনি ৳০.৫০ পয়েন্ট পেয়েছেন।');
+                
+                // ব্যবহারকারীর ডেটা সেভ করুন
+                saveUserData();
+            } else {
+                alert('ভুল উত্তর! সঠিক উত্তর: ' + currentQuestion.options[currentQuestion.correctAnswer]);
+            }
+            
+            // এই প্রশ্নটি উত্তর দেওয়া হয়েছে তা চিহ্নিত করুন
+            answeredQuestions.push(currentQuestionIndex);
+            
+            // পরবর্তী প্রশ্ন লোড করুন
+            loadQuestion();
+        });
+        
+        // উত্তোলন বাটন
+        withdrawButton.addEventListener('click', function() {
+            if (userBalance < 500) {
+                alert('উত্তোলনের জন্য ন্যূনতম ৳৫০০.০০ প্রয়োজন। আপনার বর্তমান ব্যালেন্স: ৳' + userBalance.toFixed(2));
+                return;
+            }
+            
+            alert('৳' + userBalance.toFixed(2) + ' উত্তোলনের জন্য অনুরোধ করা হয়েছে। এটি প্রক্রিয়া করতে ২৪ ঘন্টা সময় লাগতে পারে।');
+            userBalance = 0;
+            balanceElement.textContent = userBalance.toFixed(2);
+            
+            // ব্যবহারকারীর ডেটা সেভ করুন
+            saveUserData();
+        });
+        
+        // রিয়েল টাইম নামাজের সময় আপডেট
+        function updatePrayerTimes() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            
+            // বাস্তব সময় অনুযায়ী নামাজের সময় গণনা (সরলীকৃত)
+            const fajrTime = new Date(now);
+            fajrTime.setHours(4, 45 + Math.floor(minutes/10), 0);
+            
+            const dhuhrTime = new Date(now);
+            dhuhrTime.setHours(12, 15 + Math.floor(minutes/10), 0);
+            
+            const asrTime = new Date(now);
+            asrTime.setHours(16, 30 + Math.floor(minutes/10), 0);
+            
+            const maghribTime = new Date(now);
+            maghribTime.setHours(18, 20 + Math.floor(minutes/10), 0);
+            
+            const ishaTime = new Date(now);
+            ishaTime.setHours(19, 45 + Math.floor(minutes/10), 0);
+            
+            // সময় ফর্ম্যাট করুন
+            document.getElementById('fajr-time').textContent = formatTime(fajrTime);
+            document.getElementById('dhuhr-time').textContent = formatTime(dhuhrTime);
+            document.getElementById('asr-time').textContent = formatTime(asrTime);
+            document.getElementById('maghrib-time').textContent = formatTime(maghribTime);
+            document.getElementById('isha-time').textContent = formatTime(ishaTime);
+        }
+        
+        function formatTime(date) {
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            return hours + ':' + minutes + ' ' + ampm;
+        }
+        
+        // তারিখ আপডেট
+        function updateDates() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const gregorianDate = today.toLocaleDateString('bn-BD', options);
+            
+            // হিজরি তারিখ (সরলীকৃত)
+            const hijriDate = calculateHijriDate(today);
+            
+            document.getElementById('gregorian-date').textContent = gregorianDate;
+            document.getElementById('gregorian-date-full').textContent = gregorianDate;
+            document.getElementById('hijri-date').textContent = hijriDate;
+            document.getElementById('hijri-date-full').textContent = hijriDate;
+        }
+        
+        function calculateHijriDate(gregorianDate) {
+            // সরলীকৃত হিজরি তারিখ গণনা
+            const hijriMonthNames = ["মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি", "জমাদিউল আউয়াল", "জমাদিউস সানি", "রজব", "শাবান", "রমজান", "শাওয়াল", "জিলকদ", "জিলহজ"];
+            const hijriDay = Math.floor(Math.random() * 28) + 1;
+            const hijriMonth = hijriMonthNames[Math.floor(Math.random() * 12)];
+            const hijriYear = 1445 + Math.floor(Math.random() * 2);
+            
+            return `${hijriDay} ${hijriMonth}, ${hijriYear} হিজরি`;
+        }
+        
+        // লগইন সিস্টেম
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if(!username || !password) {
+                showError('দয়া করে ব্যবহারকারীর নাম এবং পাসওয়ার্ড লিখুন');
+                return;
+            }
+            
+            // localStorage থেকে ব্যবহারকারীর ডেটা লোড করুন
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            if(users[username] && users[username].password === password) {
+                // লগইন সফল
+                const currentUser = {
+                    username: username,
+                    score: users[username].score || 0,
+                    balance: users[username].balance || 0,
+                    answeredQuestions: users[username].answeredQuestions || [],
+                    lastQuestionTime: users[username].lastQuestionTime || 0
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // ব্যবহারকারীর ডেটা লোড করুন
+                userScore = currentUser.score;
+                userBalance = currentUser.balance;
+                answeredQuestions = currentUser.answeredQuestions;
+                
+                // UI আপডেট করুন
+                scoreElement.textContent = userScore.toFixed(2);
+                balanceElement.textContent = userBalance.toFixed(2);
+                
+                // অ্যাপ দেখান
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+                
+                // প্রশ্ন লোড করুন
+                loadQuestion();
+                
+                // রিয়েল টাইম আপডেট শুরু করুন
+                setInterval(updatePrayerTimes, 60000); // প্রতি মিনিটে আপডেট
+                updatePrayerTimes();
+            } else {
+                showError('ভুল ব্যবহারকারীর নাম বা পасওয়ার্ড');
+            }
+        });
+        
+        // রেজিস্টার লিংক
+        document.getElementById('register-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if(!username || !password) {
+                showError('দয়া করে ব্যবহারকারীর নাম এবং পাসওয়ার্ড লিখুন');
+                return;
+            }
+            
+            // localStorage থেকে ব্যবহারকারীর ডেটা লোড করুন
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            if(users[username]) {
+                showError('এই ব্যবহারকারীর নামটি ইতিমধ্যে存在');
+                return;
+            }
+            
+            // নতুন ব্যবহারকারী তৈরি করুন
+            users[username] = {
+                password: password,
+                score: 0,
+                balance: 0,
+                answeredQuestions: [],
+                lastQuestionTime: 0
+            };
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showError('অ্যাকাউন্ট তৈরি成功! এখন লগইন করুন', 'green');
+        });
+        
+        // ত্রুটি বার্তা দেখান
+        function showError(message, color = 'red') {
+            const errorElement = document.getElementById('login-error');
+            errorElement.textContent = message;
+            errorElement.style.color = color;
+            errorElement.classList.remove('hidden');
+            
+            // 2 মিনিট পর ত্রুটি বার্তা隐藏 করুন
+            setTimeout(() => {
+                errorElement.classList.add('hidden');
+            }, 2000);
+        }
+        
+        // ব্যবহারকারীর ডেটা সেভ করুন
+        function saveUserData() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            if(currentUser.username) {
+                // বর্তমান ব্যবহারকারীর ডেটা আপডেট করুন
+                currentUser.score = userScore;
+                currentUser.balance = userBalance;
+                currentUser.answeredQuestions = answeredQuestions;
+                currentUser.lastQuestionTime = Date.now();
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // ব্যবহারকারীর তালিকায় আপডেট করুন
+                if(users[currentUser.username]) {
+                    users[currentUser.username].score = userScore;
+                    users[currentUser.username].balance = userBalance;
+                    users[currentUser.username].answeredQuestions = answeredQuestions;
+                    users[currentUser.username].lastQuestionTime = Date.now();
+                    
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+            }
+        }
+        
+        // ফাইল ডাউনলোড ফাংশন
+        downloadButton.addEventListener('click', function() {
+            // HTML কন্টেন্ট তৈরি করুন
+            const htmlContent = `<!DOCTYPE html>${document.documentElement.outerHTML}`;
+            
+            // একটি Blob তৈরি করুন
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            
+            // একটি ডাউনলোড লিঙ্ক তৈরি করুন
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'islamic-companion.html';
+            
+            // লিঙ্ক ক্লিক করুন
+            document.body.appendChild(a);
+            a.click();
+            
+            // লিঙ্ক সরান
+            document.body.removeChild(a);
+        });
+        
+        // পৃষ্ঠা লোড হওয়ার সময় প্রাথমিক সেটআপ
+        window.onload = function() {
+            updateDates();
+            
+            // যদি ব্যবহারকারী ইতিমধ্যে লগইন করে থাকে
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if(currentUser) {
+                userScore = currentUser.score;
+                userBalance = currentUser.balance;
+                answeredQuestions = currentUser.answeredQuestions || [];
+                
+                // UI আপডেট করুন
+                scoreElement.textContent = userScore.toFixed(2);
+                balanceElement.textContent = userBalance.toFixed(2);
+                
+                // অ্যাপ দেখান
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+                
+                // প্রশ্ন লোড করুন
+                loadQuestion();
+                
+                // রিয়েল টাইম আপডেট শুরু করুন
+                setInterval(updatePrayerTimes, 60000); // প্রতি মিনিটে আপডেট
+                updatePrayerTimes();
+            }
+        };
+    </script>
+</body>
+</html>https://t.me/grappro0738
